@@ -28,7 +28,7 @@ class ParticipateTest extends TestCase
     }
 
     /** @test */
-    public function unauthenticated_user_may_not_participate_in_forum_threads()
+    public function an_unauthenticated_user_may_not_participate_in_forum_threads()
     {
         $this->expectException(AuthenticationException::class);
         $this->withoutExceptionHandling();
