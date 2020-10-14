@@ -11,13 +11,9 @@ use Tests\TestCase;
 
 class CreateTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function an_authenticated_user_can_create_new_forum_threads()
     {
-        $this->withoutExceptionHandling();
-
         $this->signIn();
 
         $thread = make(Thread::class);
@@ -42,5 +38,21 @@ class CreateTest extends TestCase
         $this->get($thread->path())
             ->assertSee($thread->title)
             ->assertSee($thread->body);
+    }
+
+    /** @test */
+    public function authenticated_user_can_view_create_new_forum_threads_page()
+    {
+        $this->signIn();
+
+        $this->get('threads/create')
+            ->assertViewIs('threads.create');
+    }
+
+    /** @test */
+    public function guests_cannot_view_create_new_forum_threads_page()
+    {
+        $this->get('threads/create')
+            ->assertRedirect('/login');
     }
 }
