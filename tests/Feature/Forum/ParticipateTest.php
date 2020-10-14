@@ -30,6 +30,7 @@ class ParticipateTest extends TestCase
     {
         $this->expectException(AuthenticationException::class);
         $this->withoutExceptionHandling();
-        $this->post('/threads/1/replies', []);
+        $this->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 }

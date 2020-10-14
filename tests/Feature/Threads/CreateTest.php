@@ -16,7 +16,7 @@ class CreateTest extends TestCase
     {
         $this->signIn();
 
-        $thread = make(Thread::class);
+        $thread = create(Thread::class);
 
         $this->post('/threads', $thread->toArray());
 
@@ -50,7 +50,7 @@ class CreateTest extends TestCase
     }
 
     /** @test */
-    public function guests_cannot_view_create_new_forum_threads_page()
+    public function an_unauthenticated_cannot_view_create_new_forum_threads_page()
     {
         $this->get('threads/create')
             ->assertRedirect('/login');
