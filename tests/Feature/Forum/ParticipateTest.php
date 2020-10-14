@@ -11,15 +11,13 @@ use Tests\TestCase;
 
 class ParticipateTest extends TestCase
 {
-    use DatabaseMigrations;
-
     /** @test */
     public function an_authenticated_user_may_participate_in_forum_threads()
     {
-        $this->be($user = User::factory()->create());
+        $this->signIn();
 
-        $thread = Thread::factory()->create();
-        $reply = Reply::factory()->make();
+        $thread = create(Thread::class);
+        $reply = make(Reply::class);
 
         $this->post($thread->path() . '/replies', $reply->toArray());
 

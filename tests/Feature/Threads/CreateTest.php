@@ -18,9 +18,9 @@ class CreateTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs(User::factory()->create());
+        $this->signIn();
 
-        $thread = Thread::factory()->make();
+        $thread = make(Thread::class);
 
         $this->post('/threads', $thread->toArray());
 
@@ -35,7 +35,7 @@ class CreateTest extends TestCase
         $this->expectException(AuthenticationException::class);
         $this->withoutExceptionHandling();
 
-        $thread = Thread::factory()->make();
+        $thread = make(Thread::class);
 
         $this->post('/threads', $thread->toArray());
 

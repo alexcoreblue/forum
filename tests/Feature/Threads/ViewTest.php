@@ -9,13 +9,11 @@ use Tests\TestCase;
 
 class ViewTest extends TestCase
 {
-    use DatabaseMigrations;
-
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->thread = Thread::factory()->create();
+        $this->thread = create(Thread::class);
     }
 
     /** @test */
@@ -35,7 +33,7 @@ class ViewTest extends TestCase
     /** @test */
     public function a_user_can_view_replies_associated_with_a_thread()
     {
-        $reply = Reply::factory()->create(['thread_id' => $this->thread->id]);
+        $reply = create(Reply::class, ['thread_id' => $this->thread->id]);
 
         $this->get($this->thread->path())
             ->assertSee($reply->body);
