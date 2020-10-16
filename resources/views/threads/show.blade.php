@@ -6,9 +6,26 @@
     <div class="row">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">
-                    <a href="/profiles/{{ $thread->creator->name }}">{{ $thread->creator->name }}</a> posted:
-                    {{ $thread->title }}
+
+
+                <div class="card-header mt-1" style="background-color: white;">
+
+
+                    <div class="level">
+                        <h5 class="flex">
+                            <a href="/profiles/{{ $thread->creator->name }}"> {{ $thread->creator->name }} </a> posted:
+                            {{ $thread->title }}
+                        </h5>
+
+                        <div>
+                            <form method="POST" action="{{ $thread->path() }}">
+                                @method('delete')
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card-body">

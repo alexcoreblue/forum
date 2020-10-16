@@ -25,6 +25,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/threads', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads.index');
 Route::get('/threads/create', [App\Http\Controllers\ThreadsController::class, 'create'])->name('threads.create');
 Route::get('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'show'])->name('threads.show');
+Route::delete('/threads/{channel}/{thread}', [App\Http\Controllers\ThreadsController::class, 'destroy'])->name('threads.destroy');
 Route::post('/threads', [App\Http\Controllers\ThreadsController::class, 'store'])->name('threads.store');
 Route::get('/threads/{channel}', [App\Http\Controllers\ThreadsController::class, 'index'])->name('threads.index');
 

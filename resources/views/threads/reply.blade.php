@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header">
+    <div class="card-header mt-1" style="background-color: white;">
 
         <div class="level">
             <h5 class="flex">
