@@ -13,13 +13,13 @@ use Tests\TestCase;
 class DeleteTest extends TestCase
 {
     /** @test */
-    public function a_thread_can_be_deleted()
+    public function authorised_users_can_delete_threads()
     {
         $this->withoutExceptionHandling();
 
         $this->signIn();
 
-        $thread = create(Thread::class);
+        $thread = create(Thread::class, ['user_id' => auth()->id()]);
         $reply = create(Reply::class, ['thread_id' => $thread->id]);
 
         $response = $this->json('DELETE', $thread->path());
@@ -30,18 +30,19 @@ class DeleteTest extends TestCase
     }
 
     /** @test */
-    public function threads_may_only_be_deleted_by_those_who_have_permission()
-    {
-        // TODO
-    }
-
-    /** @test */
-    public function guests_cannot_delete_threads()
+    public function unauhtorised_users_cannot_delete_threads()
     {
         $thread = create(Thread::class);
 
-        $response = $this->delete($thread->path());
-        $response->assertRedirect('/login');
+        $this->delete($thread->path())
+            ->assertRedirect('/login');
+
+        $this->assertDatabaseHas('threads', ['id' => $thread->id]);
+
+        $this->signIn();
+
+        $this->delete($thread->path())
+            ->assertStatus(403);
 
         $this->assertDatabaseHas('threads', ['id' => $thread->id]);
     }
